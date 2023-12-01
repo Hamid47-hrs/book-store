@@ -14,7 +14,7 @@ class Book(models.Model):
     summary = models.TextField(
         max_length=1000, help_text="Enter a brief description of the book."
     )
-    isbn = models.CharField(max_length=13, help_text="13 character ISBN.")
+    isbn = models.CharField(max_length=13, help_text="13 character ISBN.", name="ISBN")
 
     # * ManyToManyField used because 'genre' can contain many books and 'book' can cover many genres.
     genre = models.ManyToManyField(Genre, help_text="Select a genre for the book.")
@@ -35,7 +35,7 @@ class Author(models.Model):
         ordering = ["last_name", "first_name"]
 
     def __str__(self):
-        return f"{self.first_name} {self.last_name}"
+        return f"{self.last_name}, {self.first_name}"
 
 
 class BookInstance(models.Model):
@@ -49,13 +49,13 @@ class BookInstance(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     book = models.ForeignKey("Book", on_delete=models.SET_NULL, null=True)
     imprint = models.CharField(max_length=200)
-    due_book = models.DateField(null=True, blank=True)
+    due_back = models.DateField(null=True, blank=True)
     status = models.CharField(
         max_length=1, choices=LOAN_STATUS, default="m", help_text="Book availability."
     )
 
     class Meta:
-        ordering = ["due_book"]
+        ordering = ["due_back"]
 
     def __str__(self):
         return f"{self.book.title} - ({self.id})"
