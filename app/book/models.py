@@ -58,4 +58,4 @@ class BookInstance(models.Model):
         ordering = ["due_back"]
 
     def __str__(self):
-        return f"{self.book.title} - ({self.id})"
+        return f"{self.book.title} - ({self.id})" # type: ignore
