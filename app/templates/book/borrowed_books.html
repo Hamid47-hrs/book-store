@@ -1,0 +1,27 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}
+    My Books
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="center">
+            <h1 class="fw-light text-primary text-center mt-5">Borrowed Books</h1>
+
+            {% if bookinstance_list %}
+                <ul>
+                    {% for book_inst in bookinstance_list %}
+                        <li class="{% if book_inst.is_overdue %}text-danger {% else %}text-secondary {% endif %}">
+                            <a href="{% url 'book:detail' book_inst.book.pk %}" class="logout-link">
+                                {{ book_inst.book.title }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="mt-5 h4 text-center text-black-50">You have no borrowed books yet.</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

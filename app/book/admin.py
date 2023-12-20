@@ -77,6 +77,7 @@ class BookInstanceAdmin(admin.ModelAdmin):
     list_display = (
         "book",
         "status",
+        "borrower",
         "due_back",
     )
     list_filter = (
